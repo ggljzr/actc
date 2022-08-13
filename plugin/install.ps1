@@ -1,7 +1,7 @@
 # Just a simple script for copying plugin source code into
 # Assetto Corsa plugin folder
 
-$pluginName = "ACTC"
+$pluginName = "actc"
 $appsFolder = "C:\Program Files (x86)\Steam\steamapps\common\assettocorsa\apps\python"
 
 $pluginFolder = Join-Path -Path $appsFolder -Child $pluginName
