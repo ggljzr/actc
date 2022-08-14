@@ -12,24 +12,24 @@ class Controller:
     """
 
     def __init__(self, port, baudrate):
-        self.command_queue = Queue()
+        self.__commandQueue = Queue()
 
         self.port = port
         self.baudrate = baudrate
 
-        self.__is_running = False
+        self.__isRunning = False
         self.__thread = Thread(target=self.__loop, daemon=True)
 
     def __loop(self):
-        while self.__is_running:
+        while self.__isRunning:
             try:
                 with Serial(
                     port=self.port, baudrate=self.baudrate, write_timeout=1.0
                 ) as ser:
-                    while self.__is_running:
+                    while self.__isRunning:
 
                         try:
-                            command = self.command_queue.get(timeout=1.0)
+                            command = self.__commandQueue.get(timeout=1.0)
                         except Empty:
                             continue
 
@@ -40,8 +40,8 @@ class Controller:
 
             sleep(1.0)
 
-    def add_command(self, command):
-        self.command_queue.put(command)
+    def addCommand(self, command):
+        self.__commandQueue.put(command)
 
     def start(self):
         """
@@ -49,11 +49,11 @@ class Controller:
         """
 
         ac.console("Starting ACTC controller...")
-        if self.__is_running:
+        if self.__isRunning:
             ac.console("ACTC controller is already running...")
             return
 
-        self.__is_running = True
+        self.__isRunning = True
         self.__thread.start()
 
     def stop(self):
@@ -62,4 +62,4 @@ class Controller:
         """
 
         ac.console("Stopping ACTC controller...")
-        self.__is_running = False
+        self.__isRunning = False
