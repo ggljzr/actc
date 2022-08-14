@@ -92,9 +92,7 @@ def acUpdate(deltaT):
 
     if newTc != tc:
         tc = newTc
-        msg = "TC: " + str(tc)
-        ac.console(msg)
-        controller.addCommand(msg.encode("ascii") + b"\r\n")
+        controller.setTC(tc)
 
 
 def acShutdown():

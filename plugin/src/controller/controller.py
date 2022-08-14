@@ -7,6 +7,8 @@ from time import sleep
 
 from configparser import ConfigParser
 
+from .commands import SetTC
+
 
 class Controller:
     """
@@ -35,15 +37,23 @@ class Controller:
                         except Empty:
                             continue
 
-                        ser.write(command)
+                        ser.write(bytes(command))
 
             except SerialException as e:
                 ac.console("ACTC Serial exception: " + str(e))
 
             sleep(1.0)
 
-    def addCommand(self, command):
+    def __addCommand(self, command):
         self.__commandQueue.put(command)
+
+    def setTC(self, value):
+        """
+        Sends command to set TC to given value.
+        """
+
+        command = SetTC(value)
+        self.__addCommand(command)
 
     def start(self):
         """
