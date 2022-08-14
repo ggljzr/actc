@@ -22,7 +22,7 @@ sys.path.insert(0, rootDir + "/pyserial")
 os.environ["PATH"] = os.environ["PATH"] + ";."
 
 from libs.sim_info import info
-from actc_controller import Controller
+from controller import Controller
 
 controller = Controller.fromConfig(rootDir + "/config.ini")
 
