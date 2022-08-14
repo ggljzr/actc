@@ -18,8 +18,6 @@ os.environ["PATH"] = os.environ["PATH"] + ";."
 
 from third_party.sim_info import info
 
-updateTimer = 0.0
-
 
 def acMain(ac_version):
     """
@@ -40,13 +38,4 @@ def acMain(ac_version):
 
 
 def acUpdate(deltaT):
-    global updateTimer
-
-    updateTimer += deltaT
-
-    # Update RPM in console each 1.0 second
-    if updateTimer > 1.0:
-        updateTimer = 0.0
-        rpm = ac.getCarState(0, acsys.CS.RPM)
-        fuel = info.physics.fuel
-        ac.console("RPM: {}; Fuel: {}".format(rpm, fuel))
+    pass
