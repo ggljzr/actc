@@ -11,4 +11,7 @@ def acMain(ac_version):
     appWindow = ac.newApp("ACTC App")
     ac.setSize(appWindow, 200, 200)
 
+    ac.console("AC Version: " + str(ac_version))
+    ac.console("Python version: " + sys.version)
+
     return "ACTC App"
