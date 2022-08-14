@@ -9,7 +9,7 @@ $pluginFolder = Join-Path -Path $appsFolder -Child $pluginName
 if((Test-Path -Path $pluginFolder))
 {
     Write-Output "Removing old files..."
-    Remove-Item -Path $pluginFolder -Recurse
+    Remove-Item -Path $pluginFolder -Recurse -Force
 }
 
 Write-Output "Creating plugin folder: $($pluginFolder)"
