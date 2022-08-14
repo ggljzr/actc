@@ -17,3 +17,5 @@ New-Item -Path $appsFolder -Name $pluginName -ItemType "directory"
 
 Write-Output "Copying source files to $($pluginFolder)"
 Copy-Item -Path "./src/*" -Destination $pluginFolder -Recurse
+# Copy config.ini
+Copy-Item -Path "./config.ini" -Destination $pluginFolder
