@@ -40,6 +40,15 @@ def tcRecalculation(val):
     return val - 7
 
 
+def testButtonHandler(a, b):
+    """
+    Test button OnClick handler. Not sure about the parameters, but
+    the caller apparently passes 2 arguments to this function.
+    """
+
+    ac.console("Test button pressed")
+
+
 def acMain(ac_version):
     """
     This is the main entry point of the plugin.
@@ -58,6 +67,10 @@ def acMain(ac_version):
 
     tc = tcRecalculation(info.physics.tc)
     ac.console("TC: " + str(tc))
+
+    button = ac.addButton(appWindow, "TEST")
+    ac.setPosition(button, 3, 30)
+    ac.addOnClickedListener(button, testButtonHandler)
 
     return "ACTC App"
 
