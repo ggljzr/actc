@@ -6,9 +6,9 @@ import acsys
 # we dont actually care about linkage
 arch, linkage = platform.architecture()
 if arch == "64bit":
-    sysdir = os.path.dirname(__file__) + "/third_party/stdlib64"
+    sysdir = os.path.dirname(__file__) + "/libs/stdlib64"
 else:
-    sysdir = os.path.dirname(__file__) + "/third_party/stdlib"
+    sysdir = os.path.dirname(__file__) + "/libs/stdlib"
 sys.path.insert(0, sysdir)
 
 # this has to be here to correctly load _ctypes module
@@ -16,7 +16,7 @@ sys.path.insert(0, sysdir)
 # source code
 os.environ["PATH"] = os.environ["PATH"] + ";."
 
-from third_party.sim_info import info
+from libs.sim_info import info
 
 # global variable for storing TC settings in between acUpdate calls
 tc = 0.0
