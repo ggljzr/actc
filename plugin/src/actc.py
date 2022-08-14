@@ -5,14 +5,16 @@ import acsys
 # obtain current architecture (64/32 bit)
 # we dont actually care about linkage
 arch, linkage = platform.architecture()
+rootDir = os.path.dirname(__file__)
+
 if arch == "64bit":
-    sysdir = os.path.dirname(__file__) + "/libs/stdlib64"
+    sysdir = rootDir + "/libs/stdlib64"
 else:
-    sysdir = os.path.dirname(__file__) + "/libs/stdlib"
+    sysdir = rootDir + "/libs/stdlib"
 sys.path.insert(0, sysdir)
 
 # required to properly import pyserial library
-sys.path.insert(0, os.path.dirname(__file__) + "/pyserial")
+sys.path.insert(0, rootDir + "/pyserial")
 
 # this has to be here to correctly load _ctypes module
 # shamelessly stolen from Sidekick (https://www.racedepartment.com/downloads/sidekick.11007/)
@@ -22,8 +24,7 @@ os.environ["PATH"] = os.environ["PATH"] + ";."
 from libs.sim_info import info
 from actc_controller import Controller
 
-serialConfig = {"port": "COM28", "baudrate": 9600}
-controller = Controller(**serialConfig)
+controller = Controller.fromConfig(rootDir + "/config.ini")
 
 # global variable for storing TC settings in between acUpdate calls
 tc = 0.0

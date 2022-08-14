@@ -5,6 +5,8 @@ from queue import Queue, Empty
 from serial import Serial, SerialException
 from time import sleep
 
+from configparser import ConfigParser
+
 
 class Controller:
     """
@@ -63,3 +65,13 @@ class Controller:
 
         ac.console("Stopping ACTC controller...")
         self.__isRunning = False
+
+    @staticmethod
+    def fromConfig(path="config.ini"):
+        config = ConfigParser()
+        config.read(path)
+
+        port = config["serial"]["port"]
+        baudrate = config["serial"].get("baudrate", 9600)
+
+        return Controller(port, baudrate)
