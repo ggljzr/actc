@@ -94,3 +94,7 @@ def acUpdate(deltaT):
         msg = "TC: " + str(tc)
         ac.console(msg)
         controller.add_command(msg.encode("ascii") + b"\n")
+
+
+def acShutdown():
+    controller.stop()

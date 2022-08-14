@@ -53,4 +53,5 @@ class Controller:
         self.__thread.start()
 
     def stop(self):
+        ac.console("Stopping ACTC controller...")
         self.__is_running = False
