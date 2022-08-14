@@ -10,6 +10,8 @@ if arch == "64bit":
 else:
     sysdir = os.path.dirname(__file__) + "/libs/stdlib"
 sys.path.insert(0, sysdir)
+
+# required to properly import pyserial library
 sys.path.insert(0, os.path.dirname(__file__) + "/pyserial")
 
 # this has to be here to correctly load _ctypes module

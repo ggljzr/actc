@@ -7,6 +7,10 @@ from time import sleep
 
 
 class Controller:
+    """
+    Class implementing command queue and threaded serial communication.
+    """
+
     def __init__(self, port, baudrate):
         self.command_queue = Queue()
 
