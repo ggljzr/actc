@@ -18,4 +18,7 @@ def acMain(ac_version):
     carName = ac.getCarName(0)
     ac.console("Car name: " + carName)
 
+    currentRpm = ac.getCarState(0, acsys.CS.RPM)
+    ac.console("RPM: " + str(currentRpm))
+
     return "ACTC App"
