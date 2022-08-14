@@ -18,11 +18,33 @@ os.environ["PATH"] = os.environ["PATH"] + ";."
 
 from third_party.sim_info import info
 
+# global variable for storing TC settings in between acUpdate calls
+tc = 0.0
+
+
+def tcRecalculation(val):
+    """
+    Helper function for transforming TC value from ``info.physics``
+    into more readable form.
+
+    Also note that in Assetto Corsa low TC values means stronger TC
+    (so e. g. for AMG GT3 1 is strongest, 12 is weakest), except for 0,
+    which means that TC is off :-D.
+    """
+    val = round(val * 100, 0)
+    if val == 0.0:
+        return val
+
+    # Currently I have no idea why it is offset like this,
+    # perhaps it is different for some specific cars?
+    return val - 7
+
 
 def acMain(ac_version):
     """
     This is the main entry point of the plugin.
     """
+    global tc
 
     appWindow = ac.newApp("ACTC App")
     ac.setSize(appWindow, 200, 200)
@@ -34,11 +56,17 @@ def acMain(ac_version):
     carName = ac.getCarName(0)
     ac.console("Car name: " + carName)
 
-    tc = info.physics.tc
+    tc = tcRecalculation(info.physics.tc)
     ac.console("TC: " + str(tc))
 
     return "ACTC App"
 
 
 def acUpdate(deltaT):
-    pass
+    global tc
+
+    newTc = tcRecalculation(info.physics.tc)
+
+    if newTc != tc:
+        tc = newTc
+        ac.console("TC: " + str(tc))
