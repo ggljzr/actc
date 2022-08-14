@@ -10,6 +10,7 @@ if arch == "64bit":
 else:
     sysdir = os.path.dirname(__file__) + "/libs/stdlib"
 sys.path.insert(0, sysdir)
+sys.path.insert(0, os.path.dirname(__file__) + "/pyserial")
 
 # this has to be here to correctly load _ctypes module
 # shamelessly stolen from Sidekick (https://www.racedepartment.com/downloads/sidekick.11007/)
@@ -17,6 +18,10 @@ sys.path.insert(0, sysdir)
 os.environ["PATH"] = os.environ["PATH"] + ";."
 
 from libs.sim_info import info
+from actc_controller import Controller
+
+serialConfig = {"port": "COM28", "baudrate": 9600}
+controller = Controller(**serialConfig)
 
 # global variable for storing TC settings in between acUpdate calls
 tc = 0.0
@@ -72,6 +77,8 @@ def acMain(ac_version):
     ac.setPosition(button, 3, 30)
     ac.addOnClickedListener(button, testButtonHandler)
 
+    controller.start()
+
     return "ACTC App"
 
 
@@ -82,4 +89,6 @@ def acUpdate(deltaT):
 
     if newTc != tc:
         tc = newTc
-        ac.console("TC: " + str(tc))
+        msg = "TC: " + str(tc)
+        ac.console(msg)
+        controller.add_command(msg.encode("ascii") + b"\n")
