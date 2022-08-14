@@ -44,6 +44,10 @@ class Controller:
         self.command_queue.put(command)
 
     def start(self):
+        """
+        Starts command sending loop in separate thread.
+        """
+
         ac.console("Starting ACTC controller...")
         if self.__is_running:
             ac.console("ACTC controller is already running...")
@@ -53,5 +57,9 @@ class Controller:
         self.__thread.start()
 
     def stop(self):
+        """
+        Stops command sending loop.
+        """
+
         ac.console("Stopping ACTC controller...")
         self.__is_running = False
