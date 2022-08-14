@@ -34,6 +34,9 @@ def acMain(ac_version):
     carName = ac.getCarName(0)
     ac.console("Car name: " + carName)
 
+    tc = info.physics.tc
+    ac.console("TC: " + str(tc))
+
     return "ACTC App"
 
 
