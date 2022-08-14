@@ -1,22 +1,41 @@
 #include <Arduino.h>
 #include <Keyboard.h>
+#include <Encoder.h>
+#include <math.h>
 
-constexpr int buttonPin = 12;
+Encoder tcEnc(8, 9);
+long oldPosition = -999;
 
 void setup()
 {
   Serial.begin(9600);
   Keyboard.begin();
-
-  pinMode(buttonPin, INPUT_PULLUP);
 }
 
 void loop()
 {
-  if (digitalRead(buttonPin) == LOW)
+  long newPosition = tcEnc.read();
+  if (newPosition != oldPosition)
   {
-    Serial.println("button...");
-    Keyboard.write('o');
-    delay(100);
+    long diff = newPosition - oldPosition;
+
+    if (abs(diff) > 1)
+    {
+      if (diff < 0)
+      {
+        Keyboard.press('o');
+        delay(50);
+        Keyboard.release('o');
+        // Serial.println("-");
+      }
+      else if (diff > 0)
+      {
+        Keyboard.press('p');
+        delay(50);
+        Keyboard.release('p');
+        // Serial.println("+");
+      }
+      oldPosition = newPosition;
+    }
   }
 }
