@@ -12,7 +12,8 @@ from .commands import SetTC
 
 class Controller:
     """
-    Class implementing command queue and threaded serial communication.
+    Class implementing command queue and threaded serial communication. It contains methods
+    to set given parameters (e. g. TC) by sending commands to the ACTC device via serial interface.
     """
 
     def __init__(self, port, baudrate):
