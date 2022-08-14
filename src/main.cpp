@@ -1,9 +1,22 @@
 #include <Arduino.h>
+#include <Keyboard.h>
 
-void setup() {
-  // put your setup code here, to run once:
+constexpr int buttonPin = 12;
+
+void setup()
+{
+  Serial.begin(9600);
+  Keyboard.begin();
+
+  pinMode(buttonPin, INPUT_PULLUP);
 }
 
-void loop() {
-  // put your main code here, to run repeatedly:
+void loop()
+{
+  if (digitalRead(buttonPin) == LOW)
+  {
+    Serial.println("button...");
+    Keyboard.write('o');
+    delay(100);
+  }
 }
