@@ -60,6 +60,20 @@ void encoderTask(void *pvParameters)
   }
 }
 
+void serialTask(void *pvParameters)
+{
+  for (;;)
+  {
+    if (Serial.available() > 0)
+    {
+      uint8_t val = Serial.read();
+      displayTc(val);
+    }
+
+    vTaskDelay(10);
+  }
+}
+
 void setup()
 {
   Serial.begin(9600);
@@ -71,6 +85,7 @@ void setup()
   displayTc(1);
 
   xTaskCreate(encoderTask, "encoderTask", 128, NULL, 1, NULL);
+  xTaskCreate(serialTask, "serialTask", 128, NULL, 2, NULL);
 }
 
 void loop()
