@@ -23,6 +23,10 @@ namespace actc
     uint32_t Command::getUIntData() const
     {
         uint8_t *data = getCommandData();
-        return (data[3] << 24 | data[2] << 16 | data[1] << 8 | data[0]);
+        return (
+            (uint32_t)data[0] << 24 |
+            (uint32_t)data[1] << 16 |
+            (uint32_t)data[2] << 8 |
+            data[3]);
     }
 }

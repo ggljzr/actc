@@ -40,7 +40,7 @@ namespace actc
         /// Returns raw command data from the buffer (without the command ID).
         uint8_t *getCommandData() const;
 
-        /// Returns command data interpreted as an uint32_t.
+        /// Returns command data interpreted as an uint32_t (big endian).
         uint32_t getUIntData() const;
     };
 }
