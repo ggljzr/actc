@@ -1,6 +1,7 @@
 #include <Arduino.h>
 #include <Keyboard.h>
 #include <Encoder.h>
+#include <LiquidCrystal_I2C.h>
 
 constexpr uint8_t tcUp = 'o';
 constexpr uint8_t tcDown = 'p';
@@ -15,10 +16,17 @@ constexpr long encReadDivision = 2;
 Encoder tcEnc(8, 9);
 long oldPosition = -999;
 
+LiquidCrystal_I2C lcd(0x27, 16, 2);
+
 void setup()
 {
   Serial.begin(9600);
   Keyboard.begin();
+
+  lcd.init();
+  lcd.backlight();
+  lcd.setCursor(3, 0);
+  lcd.print("Hello, world!");
 }
 
 /// Keeps given key pressed for given delay, then releases it.
