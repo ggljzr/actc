@@ -6,8 +6,6 @@ namespace actc
 {
     constexpr size_t commandLength{5};
 
-    constexpr uint8_t tcCommandId{0x01};
-
     /**
      * Class for interperting commands from the ACTC plugin.
      * The idead is that you create an instance of this class

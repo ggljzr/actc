@@ -5,6 +5,7 @@
 #include <Arduino_FreeRTOS.h>
 
 #include "Command.hpp"
+#include "Commands.hpp"
 
 constexpr uint8_t tcUp = 'o';
 constexpr uint8_t tcDown = 'p';
@@ -80,7 +81,7 @@ void serialTask(void *pvParameters)
       // process the command according to command ID
       switch (command.getCommandId())
       {
-      case actc::tcCommandId:
+      case actc::commands::TC:
         displayTc(command.getUIntData());
         break;
       default:
