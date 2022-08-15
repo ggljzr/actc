@@ -8,8 +8,11 @@
 
 #include "Display.hpp"
 
-constexpr uint8_t tcUp = 'o';
-constexpr uint8_t tcDown = 'p';
+/// Keypress sent when knob is rotated clockwise (increase TC)
+constexpr uint8_t tcUp = 'p';
+
+/// Keypress sent when knob is rotated counterclockwise (decrease TC)
+constexpr uint8_t tcDown = 'o';
 
 /**
  * Data from Encoder.read() method will be divided by this factor.
@@ -17,9 +20,12 @@ constexpr uint8_t tcDown = 'p';
  * one keypress witch each click.
  */
 constexpr long encReadDivision = 2;
+constexpr uint8_t tcEncClkPin = 8;
+constexpr uint8_t tcEncDtPin = 9;
 
 actc::Display lcd(0x27, 16, 2);
-Encoder tcEnc(8, 9);
+
+Encoder tcEnc(tcEncClkPin, tcEncDtPin);
 long oldPosition = -999;
 
 /// Keeps given key pressed for given delay, then releases it.
@@ -37,10 +43,12 @@ void encoderTask(void *pvParameters)
     long newPosition = tcEnc.read() / encReadDivision;
     if (newPosition != oldPosition)
     {
-      long diff = newPosition - oldPosition;
+      long diff = oldPosition - newPosition;
 
+      // counterclokwise rotation
       if (diff < 0)
         shortPress(tcDown);
+      // clockwise rotation
       else if (diff > 0)
         shortPress(tcUp);
 
