@@ -2,10 +2,10 @@ import ac
 
 from threading import Thread
 from queue import Queue, Empty
-from serial import Serial, SerialException
 from time import sleep
-
 from configparser import ConfigParser
+
+from serial import Serial, SerialException
 
 from .commands import SetTC
 
