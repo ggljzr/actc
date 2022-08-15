@@ -18,15 +18,18 @@ long oldPosition = -999;
 
 LiquidCrystal_I2C lcd(0x27, 16, 2);
 
-void setup()
+void displayTc(uint8_t value)
 {
-  Serial.begin(9600);
-  Keyboard.begin();
+  lcd.setCursor(4, 0);
 
-  lcd.init();
-  lcd.backlight();
-  lcd.setCursor(3, 0);
-  lcd.print("Hello, world!");
+  if (value == 0)
+    lcd.print("off");
+  else
+  {
+    char buffer[8];
+    snprintf(buffer, 8, "%03d", value);
+    lcd.print(buffer);
+  }
 }
 
 /// Keeps given key pressed for given delay, then releases it.
@@ -35,6 +38,17 @@ void shortPress(uint8_t key, unsigned long releaseDelay = 50)
   Keyboard.press(key);
   delay(releaseDelay);
   Keyboard.release(key);
+}
+
+void setup()
+{
+  Serial.begin(9600);
+  Keyboard.begin();
+
+  lcd.init();
+  lcd.backlight();
+  lcd.print("TC:");
+  displayTc(1);
 }
 
 void loop()
