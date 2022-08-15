@@ -32,6 +32,9 @@ namespace actc
          * Reads command data (commandLength bytes) from given stream and stores it
          * in the internal buffer. You can then use Command methods
          * to read these data.
+         *
+         * User should make sure that there is enough bytes in the stream to construct
+         * the command.
          */
         void readFromStream(Stream *stream);
 
