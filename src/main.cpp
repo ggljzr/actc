@@ -1,11 +1,12 @@
 #include <Arduino.h>
 #include <Keyboard.h>
 #include <Encoder.h>
-#include <LiquidCrystal_I2C.h>
 #include <Arduino_FreeRTOS.h>
 
 #include "Command.hpp"
 #include "Commands.hpp"
+
+#include "Display.hpp"
 
 constexpr uint8_t tcUp = 'o';
 constexpr uint8_t tcDown = 'p';
@@ -17,24 +18,9 @@ constexpr uint8_t tcDown = 'p';
  */
 constexpr long encReadDivision = 2;
 
+actc::Display lcd(0x27, 16, 2);
 Encoder tcEnc(8, 9);
 long oldPosition = -999;
-
-LiquidCrystal_I2C lcd(0x27, 16, 2);
-
-void displayTc(uint8_t value)
-{
-  lcd.setCursor(4, 0);
-
-  if (value == 0)
-    lcd.print("off");
-  else
-  {
-    char buffer[8];
-    snprintf(buffer, 8, "%03d", value);
-    lcd.print(buffer);
-  }
-}
 
 /// Keeps given key pressed for given delay, then releases it.
 void shortPress(uint8_t key, unsigned long releaseDelay = 50)
@@ -82,7 +68,7 @@ void serialTask(void *pvParameters)
       switch (command.getCommandId())
       {
       case actc::commands::TC:
-        displayTc(command.getUIntData());
+        lcd.setTC((uint8_t)command.getUIntData());
         break;
       default:
         break;
@@ -97,11 +83,7 @@ void setup()
 {
   Serial.begin(9600);
   Keyboard.begin();
-
-  lcd.init();
-  lcd.backlight();
-  lcd.print("TC:");
-  displayTc(1);
+  lcd.begin();
 
   xTaskCreate(encoderTask, "encoderTask", 128, NULL, 1, NULL);
   xTaskCreate(serialTask, "serialTask", 128, NULL, 2, NULL);

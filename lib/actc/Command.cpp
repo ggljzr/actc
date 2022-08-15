@@ -4,7 +4,7 @@ namespace actc
 {
     Command::Command(){};
 
-    void Command::readFromBuffer(uint8_t *buffer, size_t offset = 0)
+    void Command::readFromBuffer(uint8_t *buffer, size_t offset)
     {
         for (size_t i = 0; i < commandLength; i++)
             this->buffer[i] = buffer[i];
