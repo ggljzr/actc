@@ -2,6 +2,7 @@
 #include <Keyboard.h>
 #include <Encoder.h>
 #include <LiquidCrystal_I2C.h>
+#include <Arduino_FreeRTOS.h>
 
 constexpr uint8_t tcUp = 'o';
 constexpr uint8_t tcDown = 'p';
@@ -36,8 +37,27 @@ void displayTc(uint8_t value)
 void shortPress(uint8_t key, unsigned long releaseDelay = 50)
 {
   Keyboard.press(key);
-  delay(releaseDelay);
+  vTaskDelay(releaseDelay / portTICK_PERIOD_MS);
   Keyboard.release(key);
+}
+
+void encoderTask(void *pvParameters)
+{
+  for (;;)
+  {
+    long newPosition = tcEnc.read() / encReadDivision;
+    if (newPosition != oldPosition)
+    {
+      long diff = newPosition - oldPosition;
+
+      if (diff < 0)
+        shortPress(tcDown);
+      else if (diff > 0)
+        shortPress(tcUp);
+
+      oldPosition = newPosition;
+    }
+  }
 }
 
 void setup()
@@ -49,20 +69,10 @@ void setup()
   lcd.backlight();
   lcd.print("TC:");
   displayTc(1);
+
+  xTaskCreate(encoderTask, "encoderTask", 128, NULL, 1, NULL);
 }
 
 void loop()
 {
-  long newPosition = tcEnc.read() / encReadDivision;
-  if (newPosition != oldPosition)
-  {
-    long diff = newPosition - oldPosition;
-
-    if (diff < 0)
-      shortPress(tcDown);
-    else if (diff > 0)
-      shortPress(tcUp);
-
-    oldPosition = newPosition;
-  }
 }
