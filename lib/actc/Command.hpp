@@ -33,7 +33,7 @@ namespace actc
          * in the internal buffer. You can then use Command methods
          * to read these data.
          */
-        // void readFromStream(&Stream stream);
+        void readFromStream(Stream *stream);
 
         uint8_t getCommandId() const;
 

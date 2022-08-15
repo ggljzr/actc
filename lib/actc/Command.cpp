@@ -10,6 +10,11 @@ namespace actc
             this->buffer[i] = buffer[i];
     }
 
+    void Command::readFromStream(Stream *stream)
+    {
+        stream->readBytes(buffer, commandLength);
+    }
+
     uint8_t Command::getCommandId() const
     {
         return buffer[0];
