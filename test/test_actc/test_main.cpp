@@ -10,6 +10,7 @@
 
 constexpr uint32_t serialInitDelay = 2000;
 
+/// Just a simple test for getUIntData parsing.
 void testCommand()
 {
     uint8_t buffer[5] = {0x01, 0x00, 0x00, 0x00, 0x08};
