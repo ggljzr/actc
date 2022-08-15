@@ -4,6 +4,12 @@ namespace actc
 {
     Command::Command(){};
 
+    void Command::readFromBuffer(uint8_t *buffer, size_t offset = 0)
+    {
+        for (size_t i = 0; i < commandLength; i++)
+            this->buffer[i] = buffer[i];
+    }
+
     uint8_t Command::getCommandId() const
     {
         return buffer[0];

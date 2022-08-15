@@ -24,11 +24,16 @@ namespace actc
         Command();
 
         /**
-         * Reads commandLength data from given stream and stores it
+         *  Copies command data (commandLength bytes) from given buffer, starting on given offset.
+         */
+        void readFromBuffer(uint8_t *buffer, size_t offset = 0);
+
+        /**
+         * Reads command data (commandLength bytes) from given stream and stores it
          * in the internal buffer. You can then use Command methods
          * to read these data.
          */
-        void readFromStream(&Stream stream);
+        // void readFromStream(&Stream stream);
 
         uint8_t getCommandId() const;
 
