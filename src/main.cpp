@@ -4,6 +4,8 @@
 #include <LiquidCrystal_I2C.h>
 #include <Arduino_FreeRTOS.h>
 
+#include "Command.hpp"
+
 constexpr uint8_t tcUp = 'o';
 constexpr uint8_t tcDown = 'p';
 
@@ -62,12 +64,28 @@ void encoderTask(void *pvParameters)
 
 void serialTask(void *pvParameters)
 {
+  actc::Command command;
+
   for (;;)
   {
-    if (Serial.available() > 0)
+    // wait for at least commandLength bytes
+    if (Serial.available() >= 5)
     {
-      uint8_t val = Serial.read();
-      displayTc(val);
+      // construct a command from available bytes
+      // this call should consume commandLength bytes
+      // from the Serial stream
+
+      command.readFromStream(&Serial);
+
+      // process the command according to command ID
+      switch (command.getCommandId())
+      {
+      case actc::tcCommandId:
+        displayTc(command.getUIntData());
+        break;
+      default:
+        break;
+      }
     }
 
     vTaskDelay(10);
