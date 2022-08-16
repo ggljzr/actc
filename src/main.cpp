@@ -3,6 +3,8 @@
 #include <Encoder.h>
 #include <Arduino_FreeRTOS.h>
 
+#include "Pins.hpp"
+
 #include "Command.hpp"
 #include "Commands.hpp"
 
@@ -20,12 +22,10 @@ constexpr uint8_t tcDown = 'o';
  * one keypress witch each click.
  */
 constexpr long encReadDivision = 2;
-constexpr uint8_t tcEncClkPin = 8;
-constexpr uint8_t tcEncDtPin = 9;
 
 actc::Display lcd(0x27, 16, 2);
 
-Encoder tcEnc(tcEncClkPin, tcEncDtPin);
+Encoder tcEnc(pins::tcEncClkPin, pins::tcEncDtPin);
 long oldPosition = -999;
 
 /// Keeps given key pressed for given delay, then releases it.
