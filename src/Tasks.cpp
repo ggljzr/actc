@@ -13,7 +13,7 @@
 
 namespace actcTasks
 {
-    void shortPress(uint8_t key, unsigned long releaseDelay = 50)
+    void shortPress(uint8_t key, unsigned long releaseDelay)
     {
         Keyboard.press(key);
         vTaskDelay(releaseDelay / portTICK_PERIOD_MS);
