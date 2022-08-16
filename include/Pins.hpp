@@ -12,6 +12,9 @@
 
 namespace pins
 {
+    /// CLK pin of TC encoder
     constexpr uint8_t tcEncClkPin{8};
+
+    /// DT pin of TC encoder
     constexpr uint8_t tcEncDtPin{9};
 }

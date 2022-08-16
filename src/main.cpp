@@ -3,28 +3,14 @@
 #include <Encoder.h>
 #include <Arduino_FreeRTOS.h>
 
-#include "Pins.hpp"
-
 #include "Command.hpp"
 #include "Commands.hpp"
-
 #include "Display.hpp"
 
-/// Keypress sent when knob is rotated clockwise (increase TC)
-constexpr uint8_t tcUp = 'p';
-
-/// Keypress sent when knob is rotated counterclockwise (decrease TC)
-constexpr uint8_t tcDown = 'o';
-
-/**
- * Data from Encoder.read() method will be divided by this factor.
- * Seems like the encoder I am using needs divison by 2 to get exactly
- * one keypress witch each click.
- */
-constexpr long encReadDivision = 2;
+#include "Pins.hpp"
+#include "Config.hpp"
 
 actc::Display lcd(0x27, 16, 2);
-
 Encoder tcEnc(pins::tcEncClkPin, pins::tcEncDtPin);
 long oldPosition = -999;
 
@@ -40,17 +26,17 @@ void encoderTask(void *pvParameters)
 {
   for (;;)
   {
-    long newPosition = tcEnc.read() / encReadDivision;
+    long newPosition = tcEnc.read() / config::encReadDivision;
     if (newPosition != oldPosition)
     {
       long diff = oldPosition - newPosition;
 
       // counterclokwise rotation
       if (diff < 0)
-        shortPress(tcDown);
+        shortPress(config::tcDown);
       // clockwise rotation
       else if (diff > 0)
-        shortPress(tcUp);
+        shortPress(config::tcUp);
 
       oldPosition = newPosition;
     }
