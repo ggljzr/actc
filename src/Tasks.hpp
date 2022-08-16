@@ -25,6 +25,9 @@ namespace actcTasks
      */
     void serialTask(void *pvParameters);
 
-    /// Keeps given key pressed for given delay, then releases it.
+    /**
+     * Keeps given key pressed for given delay, then releases it.
+     * Uses vTaskDelay from FreeRTOS. Just a helper function.
+     */
     void shortPress(uint8_t key, unsigned long releaseDelay = 50ul);
 }
