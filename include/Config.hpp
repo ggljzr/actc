@@ -26,4 +26,6 @@ namespace config
     constexpr uint8_t displayAddr{0x27};
     constexpr uint8_t displayCols{16};
     constexpr uint8_t displayRows{2};
+
+    constexpr uint32_t serialBaudrate{9600};
 }
