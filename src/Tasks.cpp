@@ -27,6 +27,11 @@ namespace actcTasks
         actc::DirectionEncoder tcEnc(pins::tcEncClkPin, pins::tcEncDtPin, config::encReadDivision);
         actc::DirectionEncoder absEnc(pins::absEncClkPin, pins::absEncDtPin, config::encReadDivision);
 
+        // just to set correct reading position
+        // before starting the loop
+        tcEnc.read();
+        absEnc.read();
+
         for (;;)
         {
             int32_t tcDiff = tcEnc.read();
