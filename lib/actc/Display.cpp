@@ -33,11 +33,11 @@ namespace actc
 
     void Display::setTC(uint8_t value)
     {
-        printValueOrOff(value, 0, 5);
+        printValueOrOff((uint32_t)value, 0, 5);
     }
 
     void Display::setABS(uint8_t value)
     {
-        printValueOrOff(value, 1, 5);
+        printValueOrOff((uint32_t)value, 1, 5);
     }
 }

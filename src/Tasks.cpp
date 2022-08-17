@@ -75,6 +75,9 @@ namespace actcTasks
                 case actc::commands::TC:
                     lcd.setTC((uint8_t)command.getUIntData());
                     break;
+                case actc::commands::ABS:
+                    lcd.setABS((uint8_t)command.getUIntData());
+                    break;
                 default:
                     break;
                 }
