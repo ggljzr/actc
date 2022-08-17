@@ -17,4 +17,11 @@ namespace pins
 
     /// DT pin of TC encoder
     constexpr uint8_t tcEncDtPin{0};
+
+    /// CLK pin of ABS encoder
+    constexpr uint8_t absEncClkPin{9};
+
+    /// DT pin of ABS encoder
+    constexpr uint8_t absEncDtPin{8};
+
 }

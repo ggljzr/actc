@@ -15,6 +15,12 @@ namespace config
     /// Keypress sent when TC knob is rotated counterclockwise (decrease TC)
     constexpr uint8_t tcDown{'o'};
 
+    /// Keypress sent when ABS knob is rotated clockwise (increase ABS)
+    constexpr uint8_t absUp{'k'};
+
+    /// Keypress sent when ABS knob is rotated clockwise (increase ABS)
+    constexpr uint8_t absDown{'j'};
+
     /**
      * Data from Encoder.read() method will be divided by this factor.
      * Seems like the encoder I am using needs divison by 2 to get exactly
