@@ -20,19 +20,25 @@ namespace actcTasks
         Keyboard.release(key);
     }
 
+    // TODO: needs refactoring (custom Encoder class)
     void encoderTask(void *pvParameters)
     {
         Keyboard.begin();
 
         Encoder tcEnc(pins::tcEncClkPin, pins::tcEncDtPin);
-        long oldPosition = -999;
+        long oldTcPosition = -999;
+
+        Encoder absEnc(pins::absEncClkPin, pins::absEncDtPin);
+        long oldAbsPosition = -999;
 
         for (;;)
         {
-            long newPosition = tcEnc.read() / config::encReadDivision;
-            if (newPosition != oldPosition)
+            long newTcPosition = tcEnc.read() / config::encReadDivision;
+            long newAbsPosition = absEnc.read() / config::encReadDivision;
+
+            if (newTcPosition != oldTcPosition)
             {
-                long diff = oldPosition - newPosition;
+                long diff = oldTcPosition - newTcPosition;
 
                 // counterclokwise rotation
                 if (diff < 0)
@@ -41,7 +47,21 @@ namespace actcTasks
                 else if (diff > 0)
                     shortPress(config::tcUp);
 
-                oldPosition = newPosition;
+                oldTcPosition = newTcPosition;
+            }
+
+            if (newAbsPosition != oldAbsPosition)
+            {
+                long diff = oldAbsPosition - newAbsPosition;
+
+                // counterclokwise rotation
+                if (diff < 0)
+                    shortPress(config::absDown);
+                // clockwise rotation
+                else if (diff > 0)
+                    shortPress(config::absUp);
+
+                oldAbsPosition = newAbsPosition;
             }
         }
     }
