@@ -7,7 +7,7 @@ from configparser import ConfigParser
 
 from serial import Serial, SerialException
 
-from .commands import SetTC
+from .commands import SetTC, SetABS
 
 
 class Controller:
@@ -53,8 +53,14 @@ class Controller:
         Sends command to set TC to given value.
         """
 
-        command = SetTC(value)
-        self.__addCommand(command)
+        self.__addCommand(SetTC(value))
+
+    def setABS(self, value):
+        """
+        Sends command to set ABS to given value.
+        """
+
+        self.__addCommand(SetABS(value))
 
     def start(self):
         """

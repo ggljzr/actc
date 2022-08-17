@@ -54,3 +54,14 @@ class SetTC(IntegerCommand):
 
     def __init__(self, value):
         super().__init__(0x01, value)
+
+
+class SetABS(IntegerCommand):
+    """
+    Command for setting ABS value. Command ID: 0x02.
+
+    :param value: value of the ABS to be set, positive integer.
+    """
+
+    def __init__(self, value):
+        super().__init__(0x02, value)
