@@ -1,5 +1,6 @@
 import ac
 
+from functools import partial
 from threading import Thread
 from queue import Queue, Empty
 from time import sleep
@@ -8,6 +9,28 @@ from configparser import ConfigParser
 from serial import Serial, SerialException
 
 from .commands import SetTC, SetABS
+
+
+def recalculation(val, offset):
+    """
+    Helper function for transforming TC and ABS value from ``info.physics``
+    into more readable form.
+
+    Also note that in Assetto Corsa low TC (or ABS) values means stronger TC
+    (so e. g. for AMG GT3 1 is strongest, 12 is weakest), except for 0,
+    which means that TC is off :-D.
+    """
+    val = round(val * 100, 0)
+    if val == 0.0:
+        return val
+
+    # Currently I have no idea why it is offset like this,
+    # perhaps it is different for some specific cars?
+    return val + offset
+
+
+tcRecalculation = partial(recalculation, offset=-7)
+absRecalculation = partial(recalculation, offset=-5)
 
 
 class Controller:
@@ -50,16 +73,22 @@ class Controller:
 
     def setTC(self, value):
         """
-        Sends command to set TC to given value.
+        Sends command to set TC to given value. Value should
+        come directly from ``info.physics.tc``
+        and is recalculated for the controller.
         """
 
+        value = tcRecalculation(value)
         self.__addCommand(SetTC(value))
 
     def setABS(self, value):
         """
-        Sends command to set ABS to given value.
+        Sends command to set ABS to given value. Value should
+        come directly from ``info.physics.abs``
+        and is recalculated for the controller.
         """
 
+        value = absRecalculation(value)
         self.__addCommand(SetABS(value))
 
     def start(self):
