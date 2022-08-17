@@ -1,12 +1,12 @@
 #include "Tasks.hpp"
 
-#include <Encoder.h>
 #include <Keyboard.h>
 #include <Arduino_FreeRTOS.h>
 
 #include "Command.hpp"
 #include "Commands.hpp"
 #include "Display.hpp"
+#include "DirectionEncoder.hpp"
 
 #include "Config.hpp"
 #include "Pins.hpp"
@@ -20,49 +20,26 @@ namespace actcTasks
         Keyboard.release(key);
     }
 
-    // TODO: needs refactoring (custom Encoder class)
     void encoderTask(void *pvParameters)
     {
         Keyboard.begin();
 
-        Encoder tcEnc(pins::tcEncClkPin, pins::tcEncDtPin);
-        long oldTcPosition = -999;
-
-        Encoder absEnc(pins::absEncClkPin, pins::absEncDtPin);
-        long oldAbsPosition = -999;
+        actc::DirectionEncoder tcEnc(pins::tcEncClkPin, pins::tcEncDtPin, config::encReadDivision);
+        actc::DirectionEncoder absEnc(pins::absEncClkPin, pins::absEncDtPin, config::encReadDivision);
 
         for (;;)
         {
-            long newTcPosition = tcEnc.read() / config::encReadDivision;
-            long newAbsPosition = absEnc.read() / config::encReadDivision;
+            int32_t tcDiff = tcEnc.read();
+            if (tcDiff < 0)
+                shortPress(config::tcDown);
+            else if (tcDiff > 0)
+                shortPress(config::tcUp);
 
-            if (newTcPosition != oldTcPosition)
-            {
-                long diff = oldTcPosition - newTcPosition;
-
-                // counterclokwise rotation
-                if (diff < 0)
-                    shortPress(config::tcDown);
-                // clockwise rotation
-                else if (diff > 0)
-                    shortPress(config::tcUp);
-
-                oldTcPosition = newTcPosition;
-            }
-
-            if (newAbsPosition != oldAbsPosition)
-            {
-                long diff = oldAbsPosition - newAbsPosition;
-
-                // counterclokwise rotation
-                if (diff < 0)
-                    shortPress(config::absDown);
-                // clockwise rotation
-                else if (diff > 0)
-                    shortPress(config::absUp);
-
-                oldAbsPosition = newAbsPosition;
-            }
+            int32_t absDiff = absEnc.read();
+            if (absDiff < 0)
+                shortPress(config::absDown);
+            else if (absDiff > 0)
+                shortPress(config::absUp);
         }
     }
 
