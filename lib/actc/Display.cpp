@@ -9,14 +9,17 @@ namespace actc
     {
         lcd.init();
         lcd.backlight();
-        lcd.print("TC:");
+        lcd.print("TC :");
+        lcd.setCursor(0, 1);
+        lcd.print("ABS:");
 
         setTC(0);
+        setABS(0);
     }
 
-    void Display::setTC(uint8_t value)
+    void Display::printValueOrOff(uint8_t value, uint8_t cursorRow, uint8_t cursorCol)
     {
-        lcd.setCursor(4, 0);
+        lcd.setCursor(cursorCol, cursorRow);
 
         if (value == 0)
             lcd.print("off");
@@ -26,5 +29,15 @@ namespace actc
             snprintf(buffer, 8, "%03d", value);
             lcd.print(buffer);
         }
+    }
+
+    void Display::setTC(uint8_t value)
+    {
+        printValueOrOff(value, 0, 5);
+    }
+
+    void Display::setABS(uint8_t value)
+    {
+        printValueOrOff(value, 1, 5);
     }
 }
