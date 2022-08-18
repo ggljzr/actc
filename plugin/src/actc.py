@@ -1,8 +1,6 @@
 import platform, sys, os
-from functools import partial
 
 import ac
-import acsys
 
 # obtain current architecture (64/32 bit)
 # we dont actually care about linkage
