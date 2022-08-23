@@ -5,6 +5,10 @@ USB controller for Assetto Corsa with following features:
 * Adjusting TC and ABS levels with rotary encoders.
 * Displaying current TC and ABS settings.
 
+## Circuit diagram
+
+![ACTC circuit diagram](imgs/actc.png)
+
 ## Installation
 
 Assetto Corsa plugin is required for communication with the controller. This plugin can be installed with ``install.ps1`` script within ``plugin`` folder (you may have to adjust target folder within the script). After installation, you need to configure controller COM port in ``config.ini`` within the plugin folder:
