@@ -10,11 +10,20 @@ namespace actc
         lcd.init();
         lcd.backlight();
         lcd.print("TC :");
+
         lcd.setCursor(0, 1);
         lcd.print("ABS:");
 
+        lcd.setCursor(0, 2);
+        lcd.print("Best:");
+        lcd.setCursor(0, 3);
+        lcd.print("Last:");
+
         setTC(0);
         setABS(0);
+
+        setBestLap(0);
+        setLastLap(0);
     }
 
     void Display::printValueOrOff(uint8_t value, uint8_t cursorRow, uint8_t cursorCol)
@@ -39,5 +48,17 @@ namespace actc
     void Display::setABS(uint8_t value)
     {
         printValueOrOff((uint32_t)value, 1, 5);
+    }
+
+    void Display::setBestLap(uint32_t value)
+    {
+        lcd.setCursor(8, 2);
+        lcd.print("--:--:--.---");
+    }
+
+    void Display::setLastLap(uint32_t value)
+    {
+        lcd.setCursor(8, 3);
+        lcd.print("--:--:--.---");
     }
 }

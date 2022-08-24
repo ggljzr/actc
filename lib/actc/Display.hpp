@@ -21,5 +21,10 @@ namespace actc
         /// Sets TC value to be displayed.
         void setTC(uint8_t value);
         void setABS(uint8_t value);
+
+        /// Sets best lap time (given in miliseconds)
+        void setBestLap(uint32_t value);
+        /// Sets last lap time (given in miliseconds)
+        void setLastLap(uint32_t value);
     };
 }
