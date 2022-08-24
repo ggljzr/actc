@@ -4,6 +4,10 @@ USB controller for Assetto Corsa with following features:
 
 * Adjusting TC and ABS levels with rotary encoders.
 * Displaying current TC and ABS settings.
+* Displaying current session lap information:
+    * lap count,
+    * best lap time,
+    * last lap time.
 
 ## Circuit diagram
 
