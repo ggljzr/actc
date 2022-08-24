@@ -80,6 +80,15 @@ namespace actcTasks
                 case actc::commands::ABS:
                     lcd.setABS((uint8_t)command.getUIntData());
                     break;
+                case actc::commands::lapCount:
+                    lcd.setLaps(command.getUIntData());
+                    break;
+                case actc::commands::bestLap:
+                    lcd.setBestLap(command.getUIntData());
+                    break;
+                case actc::commands::lastLap:
+                    lcd.setLastLap(command.getUIntData());
+                    break;
                 default:
                     break;
                 }
