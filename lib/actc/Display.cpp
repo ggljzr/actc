@@ -80,7 +80,7 @@ namespace actc
 
     void Display::setLaps(uint32_t value)
     {
-        lcd.setCursor(6, 1);
+        lcd.setCursor(7, 1);
         char buffer[16];
         snprintf(buffer, 16, "%03lu", value);
         lcd.print(buffer);
