@@ -8,7 +8,7 @@ from configparser import ConfigParser
 
 from serial import Serial, SerialException
 
-from .commands import SetTC, SetABS
+from .commands import SetTC, SetABS, SetLapCount, SetBestLap, SetLastLap
 
 
 def recalculation(val, offset):
@@ -90,6 +90,24 @@ class Controller:
 
         value = absRecalculation(value)
         self.__addCommand(SetABS(value))
+
+    def setLastLap(self, value):
+        """
+        Sends command for setting last lap time. Value in milliseconds.
+        """
+        self.__addCommand(SetBestLap(value))
+
+    def setBestLap(self, value):
+        """
+        Sends command for setting best lap time. Value in milliseconds.
+        """
+        self.__addCommand(SetLastLap(value))
+
+    def setLapCount(self, value):
+        """
+        Sends command for setting lap count.
+        """
+        self.__addCommand(SetLapCount(value))
 
     def start(self):
         """

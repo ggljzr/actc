@@ -65,3 +65,34 @@ class SetABS(IntegerCommand):
 
     def __init__(self, value):
         super().__init__(0x02, value)
+
+
+class SetLapCount(IntegerCommand):
+    """
+    Command for setting lap count. Command ID: 0x03.
+    """
+
+    def __init__(self, value):
+        super().__init__(0x03, value)
+
+
+class SetBestLap(IntegerCommand):
+    """
+    Command for setting best lap time. Command ID: 0x04.
+
+    :param value: Lap time in milliseconds.
+    """
+
+    def __init__(self, value):
+        super().__init__(0x04, value)
+
+
+class SetLastLap(IntegerCommand):
+    """
+    Command for setting last lap time. Command ID: 0x05.
+
+    :param value: Lap time in milliseconds.
+    """
+
+    def __init__(self, value):
+        super().__init__(0x05, value)
