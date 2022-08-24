@@ -1,6 +1,7 @@
 import platform, sys, os
 
 import ac
+import acsys
 
 # obtain current architecture (64/32 bit)
 # we dont actually care about linkage
@@ -30,6 +31,10 @@ controller = Controller.fromConfig(rootDir + "/config.ini")
 tc = 0
 abs = 0
 
+lapCount = 0
+bestLapTime = 0
+lastLapTime = 0
+
 
 def acMain(ac_version):
     """
@@ -55,14 +60,22 @@ def acMain(ac_version):
     abs = info.physics.abs
     controller.setABS(abs)
 
+    controller.setLapCount(0)
+    controller.setBestLap(0)
+    controller.setLastLap(0)
+
     return "ACTC App"
 
 
 def acUpdate(deltaT):
-    global tc, abs
+    global tc, abs, lapCount, bestLapTime, lastLapTime
 
     newTc = info.physics.tc
     newAbs = info.physics.abs
+
+    newLapCount = ac.getCarState(0, acsys.CS.LapCount)
+    newBestLapTime = ac.getCarState(0, acsys.CS.BestLap)
+    newLastLapTime = ac.getCarState(0, acsys.CS.LastLap)
 
     if newTc != tc:
         tc = newTc
@@ -71,6 +84,18 @@ def acUpdate(deltaT):
     if newAbs != abs:
         abs = newAbs
         controller.setABS(abs)
+
+    if newLapCount != lapCount:
+        lapCount = newLapCount
+        controller.setLapCount(lapCount)
+
+    if newBestLapTime != bestLapTime:
+        bestLapTime = newBestLapTime
+        controller.setBestLap(bestLapTime)
+
+    if newLastLapTime != lastLapTime:
+        lastLapTime = newLastLapTime
+        controller.setLastLap(lastLapTime)
 
 
 def acShutdown():

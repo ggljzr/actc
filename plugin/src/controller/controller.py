@@ -95,13 +95,13 @@ class Controller:
         """
         Sends command for setting last lap time. Value in milliseconds.
         """
-        self.__addCommand(SetBestLap(value))
+        self.__addCommand(SetLastLap(value))
 
     def setBestLap(self, value):
         """
         Sends command for setting best lap time. Value in milliseconds.
         """
-        self.__addCommand(SetLastLap(value))
+        self.__addCommand(SetBestLap(value))
 
     def setLapCount(self, value):
         """
