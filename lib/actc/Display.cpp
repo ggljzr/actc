@@ -9,9 +9,9 @@ namespace actc
     {
         lcd.init();
         lcd.backlight();
-        lcd.print("TC :");
+        lcd.print("TC:");
 
-        lcd.setCursor(0, 1);
+        lcd.setCursor(12, 0);
         lcd.print("ABS:");
 
         lcd.setCursor(0, 2);
@@ -19,9 +19,13 @@ namespace actc
         lcd.setCursor(0, 3);
         lcd.print("Last:");
 
+        lcd.setCursor(0, 1);
+        lcd.print("Laps:");
+
         setTC(0);
         setABS(0);
 
+        setLaps(0);
         setBestLap(0);
         setLastLap(0);
     }
@@ -35,19 +39,19 @@ namespace actc
         else
         {
             char buffer[8];
-            snprintf(buffer, 8, "%03d", value);
+            snprintf(buffer, 8, "%03u", value);
             lcd.print(buffer);
         }
     }
 
     void Display::setTC(uint8_t value)
     {
-        printValueOrOff((uint32_t)value, 0, 5);
+        printValueOrOff((uint32_t)value, 0, 4);
     }
 
     void Display::setABS(uint8_t value)
     {
-        printValueOrOff((uint32_t)value, 1, 5);
+        printValueOrOff((uint32_t)value, 0, 17);
     }
 
     void Display::setBestLap(uint32_t value)
@@ -60,5 +64,13 @@ namespace actc
     {
         lcd.setCursor(8, 3);
         lcd.print("--:--:--.---");
+    }
+
+    void Display::setLaps(uint32_t value)
+    {
+        lcd.setCursor(6, 1);
+        char buffer[16];
+        snprintf(buffer, 16, "%03lu", value);
+        lcd.print(buffer);
     }
 }
