@@ -14,6 +14,12 @@ namespace actc
         /// Helper method to print given value (or 'off' if value == 0) on given position
         void printValueOrOff(uint8_t value, uint8_t cursorRow, uint8_t cursorCol);
 
+        /**
+         *  Helper method for displaying time given in milliseconds. Displays given time
+         *  in hh:mm:ss.uuu format, starting on given position.
+         */
+        void printTime(uint32_t millis, uint8_t cursorRow, uint8_t cursorCol);
+
     public:
         Display(uint8_t addr, uint8_t cols = 16, uint8_t rows = 2);
 
@@ -22,9 +28,9 @@ namespace actc
         void setTC(uint8_t value);
         void setABS(uint8_t value);
 
-        /// Sets best lap time (given in miliseconds).
+        /// Sets best lap time (given in milliseconds).
         void setBestLap(uint32_t value);
-        /// Sets last lap time (given in miliseconds).
+        /// Sets last lap time (given in milliseconds).
         void setLastLap(uint32_t value);
 
         /// Display current number of laps.

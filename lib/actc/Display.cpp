@@ -44,6 +44,20 @@ namespace actc
         }
     }
 
+    void Display::printTime(uint32_t millis, uint8_t cursorRow, uint8_t cursorCol)
+    {
+        lcd.setCursor(cursorRow, cursorCol);
+        char buffer[16];
+
+        uint32_t hours = millis / (3600000UL);
+        uint32_t minutes = (millis % (3600000UL)) / (60000UL);
+        uint32_t seconds = (millis % (60000UL)) / (1000);
+        uint32_t ms = millis % 1000;
+
+        snprintf(buffer, 16, "%03lu:%02lu:%02lu.%03lu", hours, minutes, seconds, ms);
+        lcd.print(buffer);
+    }
+
     void Display::setTC(uint8_t value)
     {
         printValueOrOff((uint32_t)value, 0, 4);
@@ -56,14 +70,12 @@ namespace actc
 
     void Display::setBestLap(uint32_t value)
     {
-        lcd.setCursor(8, 2);
-        lcd.print("--:--:--.---");
+        printTime(value, 7, 2);
     }
 
     void Display::setLastLap(uint32_t value)
     {
-        lcd.setCursor(8, 3);
-        lcd.print("--:--:--.---");
+        printTime(value, 7, 3);
     }
 
     void Display::setLaps(uint32_t value)
